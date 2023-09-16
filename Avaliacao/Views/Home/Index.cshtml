@@ -1,0 +1,63 @@
+﻿@model List<Pessoa>;
+@{
+    ViewData["Title"] = "Avaliação C#";
+}
+
+<div id="alert" class="alert alert-danger alert-dismissible fade show" role="alert" style="display: none">
+    Informe um número inteiro não negativo!
+    <button type="button" class="close close-alert" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<h2> Calcule o fatorial de um número</h2>
+<div class="row">
+
+    <div col-lg-3 col-md-3 col-sm-12 style="padding: 10px">
+        <input type="number" id="valor" placeholder="Digite um Número" />
+        <button type="submit" class="btn btn-primary" onclick="calcularFatorial()">Calcular Fatorial</button>
+    </div>
+    <div col-lg-3 col-md-3 col-sm-12>
+    </div>
+    <div col-lg-3 col-md-3 col-sm-12 style="padding: 10px">
+        <input type="text" id="result" placeholder="Resultado" readonly />
+    </div>
+</div>
+
+<hr style="margin-top: 10px" />
+
+<h2> Pessoas com mais de 30 anos</h2>
+
+@foreach (var pessoa in Model)
+{
+    <p>@pessoa.Nome</p>
+}
+
+<script>
+    function calcularFatorial() {
+        debugger;
+        $("#alert").hide();
+        var valor = parseInt($("#valor").val());
+
+        if (valor < 0) {
+          $("#alert").show();
+            return;
+        }
+
+        $.ajax({
+            url: "@Url.Action("CalculaFatorial", "Home")",
+            type: "POST",
+            dataType: "json",
+            async: true,
+            data: {
+                valor: valor,
+            },
+            success:
+                function (data) {
+                    if (data.success) {
+                        $("#result").val(data.result);
+                    }
+                }
+        });
+    }
+</script>
