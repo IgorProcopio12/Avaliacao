@@ -31,12 +31,6 @@ namespace Avaliacao.Controllers
         [HttpPost]
         public JsonResult CalculaFatorial(int valor)
         {
-            if (valor < 0)
-            {
-                TempData["MensagemErro"] = "Informe um número inteiro não negativo!";
-                return Json(TempData);
-            }
-
             BigInteger result = 1;
 
             if (valor == 0 || valor == 1)

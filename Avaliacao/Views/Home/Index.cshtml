@@ -35,9 +35,13 @@
 
 <script>
     function calcularFatorial() {
-        debugger;
         $("#alert").hide();
-        var valor = parseInt($("#valor").val());
+        var valor = parseFloat($("#valor").val());
+
+        if (!Number.isInteger(valor)) {
+            $("#alert").show();
+            return;
+        }
 
         if (valor < 0) {
           $("#alert").show();
